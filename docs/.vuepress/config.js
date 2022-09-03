@@ -6,5 +6,6 @@ module.exports = {
       { text: 'java', link: '/guide/' },
       { text: '百度一下', link: 'https://www.baidu.com' },
     ]
-  }
+  },
+  sidebar: 'auto'
 }
