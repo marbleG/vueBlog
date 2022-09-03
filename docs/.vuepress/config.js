@@ -1,4 +1,5 @@
 module.exports = {
+  base: "/vueblog/",
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
