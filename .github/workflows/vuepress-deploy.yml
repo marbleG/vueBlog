@@ -15,4 +15,3 @@ jobs:
         TARGET_BRANCH: gh_pages
         BUILD_SCRIPT: yarn && yarn docs:build
         BUILD_DIR: docs/.vuepress/dist
-        CNAME: https://www.baidu1.com
