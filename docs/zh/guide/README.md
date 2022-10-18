@@ -1,4 +1,1 @@
----
-sidebar: auto
----
-# Hello world
+# 飞飞飞
