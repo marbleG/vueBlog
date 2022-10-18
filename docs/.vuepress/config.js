@@ -7,6 +7,7 @@ module.exports = {
             {text: 'redis', link: '/redis/'},
             {text: 'foo', link: '/foo/'},
             {text: '百度一下', link: 'https://www.baidu.com'},
+            {text: 'google', link: 'https://www.google.com'},
         ],
         sidebar: {
             '/foo/': [
