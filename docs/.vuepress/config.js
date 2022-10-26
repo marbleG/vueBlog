@@ -6,6 +6,7 @@ module.exports = {
             {text: 'java', link: '/zh/java/'},
             {text: 'redis', link: '/redis/'},
             {text: 'foo', link: '/foo/'},
+            {text: '网络', link: '/network/'},
             {text: '百度一下', link: 'https://www.baidu.com'},
             {text: 'google', link: 'https://www.google.com'},
         ],
