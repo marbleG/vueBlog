@@ -22,6 +22,10 @@ module.exports = {
                 'aof',  /* /redis/aof.html */
                 'rdb'   /* /redis/chapter2.html */
             ],
+            '/store/': [
+                '',  /* /ceph/README.html */
+                'ceph',  /* /ceph/ceph.html */
+            ],
         }
     },
     // sidebar: 'auto'
