@@ -81,7 +81,7 @@ POSIX
 
 
 
-![img.png](img.png)  
+![img.png](./img.png)  
 
 对象存储
 1. 副本，故障域（osd，host）
