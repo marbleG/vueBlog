@@ -32,6 +32,7 @@ ceph-deploy mgr create ceph1 ceph2 ceph3
 ceph-deploy osd create --data /dev/sdb ceph1_osd
 
 lsblk
+blkid
 #ceph 相关命令
 ceph --version
 ceph osd tree
