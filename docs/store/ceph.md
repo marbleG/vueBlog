@@ -1,9 +1,8 @@
-# ceph
+# ceph分布式文件系统
 
-## 分布式文件系统
-### 1.快速入门
-#### 1.集群部署
-###### osd模块
+## 1.快速入门
+### 1.集群部署
+#### osd模块
 1. osd部署 本地磁盘挂载至ceph中
    2. 分类
       2. blueStore ceph-osd 进程
@@ -48,11 +47,11 @@
    2.格式化
    3.加入集群 ceph-deploy
    ```
-###### 存储实践
+#### 存储实践
 1. 概念
    1. Pool 逻辑存储区域
    2. PG 归置组 pool->pg->osd
-   3. PGP 
+   3. PGP 维持pg和osd的一种策略
    4. CRUSH
       5. 一致性hash算法将对象名称映射到PG
       6. 将PG id 基于crush算法映射到OSD
@@ -60,14 +59,19 @@
 ```shell
 ceph osd pool create 存储池名 16 16 #16个pg，16个组
 ceph osd pool ls
+ceph osd pool ls detail
+ceph osd pool stats
 rados lspools
 rados put 文件对象名(id) /path/to/file --pool 存储池名 #上传文件
 ceph osd map 存储池 文件对象名(id)
+rados rm 文件对象名(id) --pool 存储池名 #上传文件
 
 ceph pg dump
 ceph pg ls
+ceph pg ls-by-pool
+ceph pg ls-by-osd
 #删除
-ceph osd pool rm 存储池名
+ceph osd pool rm 存储池名 存储池名 
 ```
 ![img_2.png](./img_2.png)
 ![img_1.png](./img_1.png)
@@ -78,7 +82,7 @@ ceph osd pool rm 存储池名
 
 
 
-### 4. 综合实践
+## 4. 综合实践
 1. 可视化工具
    1. calamari
    2. VSM
@@ -104,6 +108,44 @@ ceph dashboard set-rgw-api-secret-key -i 1.file
 1. 监控  
 prometheus  
 架构
+### crush
+#### 基础知识
+1. 数据分发算法，多维度的
+2. 寻址的三次映射
+   3. File和object映射：文件数据object的数据块切片操作，便于多数据的并行化处理
+   4. object和PG映射：将文件数据切分后的每一个object通过简单的hash算法归到一个PG中
+   5. PG和OSD映射：将PG映射到主机实际的OSD数据磁盘上
+6. 配置和更改和数据动态再平衡等关键特性，
+![img_3.png](./img_3.png)
+7. crush map 不同层次的逻辑Buckets和Devices组成
+   8. buckets：Root多区域，datacenter数据中心，room机房，rack机柜，host是主机
+   9. devices: 各种OSD存储设备
 
+buckets 示例
+```shell
+host mon01{
+  id -3
+  id -4 class hdd
+  weight 0.039
+  alg straw2
+  hash 0
+  item osd.0 weight 0.019 #低一层级的bucket名称
+  item osd.1 weight 0.019
+  
+}
+
+```
+相关操作
+```shell
+#1.获取crush信息
+ceph osd crush dump
+#2.操作相关信息 格式转换->再次应用
+
+ceph osd getcrushmap -o crushmap_file.txt
+crushtool -d crushmap_file.txt 
+crushtool -c crushmap_file.txt -o new.txt
+ceph osd setcrushmap -i new_crushmap_file.txt
+ceph osd crush dump|grep max_size
+```
 
 
