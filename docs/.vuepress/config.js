@@ -8,6 +8,7 @@ module.exports = {
             {text: 'foo', link: '/foo/'},
             {text: '网络', link: '/network/'},
             {text: '存储', link: '/store/'},
+            {text: 'linux', link: '/linux/'},
             {text: '百度一下', link: 'https://www.baidu.com'},
             {text: 'google', link: 'https://www.google.com'},
         ],

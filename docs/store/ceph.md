@@ -1,6 +1,20 @@
 # ceph分布式文件系统
 
 ## 1.快速入门
+### 1.集群安装
+#### 通过cephadm部署集群
+```shell
+./cephadm add-repo --release octopus
+wget -q -O- 'https://mirrors.aliyun.com/ceph/keys/release.asc' | sudo apt-key add -
+sudo apt-add-repository 'deb https://mirrors.aliyun.com/ceph/debian-octopus/ buster main'
+./cephadm install
+mkdir -p /etc/ceph
+cephadm bootstrap --mon-ip 192.168.56.101
+
+ceph orch host add marble-p2c 192.168.56.102
+
+```
+
 ### 1.集群部署
 #### osd模块
 1. osd部署 本地磁盘挂载至ceph中
@@ -115,7 +129,8 @@ prometheus
    3. File和object映射：文件数据object的数据块切片操作，便于多数据的并行化处理
    4. object和PG映射：将文件数据切分后的每一个object通过简单的hash算法归到一个PG中
    5. PG和OSD映射：将PG映射到主机实际的OSD数据磁盘上
-6. 配置和更改和数据动态再平衡等关键特性，
+6. 配置和更改和数据动态再平衡等关键特性
+   7. osd动态平衡，osd出现异常，避免故障风暴
 ![img_3.png](./img_3.png)
 7. crush map 不同层次的逻辑Buckets和Devices组成
    8. buckets：Root多区域，datacenter数据中心，room机房，rack机柜，host是主机
@@ -147,5 +162,11 @@ crushtool -c crushmap_file.txt -o new.txt
 ceph osd setcrushmap -i new_crushmap_file.txt
 ceph osd crush dump|grep max_size
 ```
-
-
+实践：将不同数据存在不同的磁盘中
+![img_4.png](./img_4.png)
+修改部分
+![img_5.png](./img_5.png)
+![img_6.png](./img_6.png)
+定制规则
+![img_7.png](./img_7.png)
+![img_8.png](img_8.png)
