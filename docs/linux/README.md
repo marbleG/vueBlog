@@ -1,6 +1,20 @@
 # linux学习
 
-1. 磁盘管理
+## 磁盘管理
+1. 新加磁盘
+```shell
+lsblk
+parted /dev/sdc print
+fdisk /dev/sdc #新建GPT分区表，g w
+gdisk /dev/sdc #新建GPT分区
+partprobe #更新linux核心的分区表信息】
+mkfs.ext4 /dev/sdc1 #磁盘格式化（建置文件系统）
+fsck.ext4 /dev/sdc1 #文件系统检测
+blkid #获取待挂载分区/文件系统
+mount /dev/sdc1 /data/ext4 #挂载
+df /data/ext4 #查看是否挂载
+```
+2. 扩缩容
 
 ```shell
 lsblk
