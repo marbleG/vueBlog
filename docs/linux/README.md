@@ -33,8 +33,17 @@ parted /dev/sda
 resize2fs /dev/sda2
 
 ```
+
+3. 清空磁盘
+```shell
+dd if=/dev/zero of=/dev/sdd bs=1M count=10 conv=fsync
+wipefs -a -f /dev/sdd
+```
+
 分区软件：GParted
 
+
+## 网络管理
 ```shell
 用户权限
 sudo su - root
