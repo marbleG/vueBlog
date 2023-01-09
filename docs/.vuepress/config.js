@@ -9,6 +9,7 @@ module.exports = {
             {text: '网络', link: '/network/'},
             {text: '存储', link: '/store/'},
             {text: 'linux', link: '/linux/'},
+            {text: '规范', link: '/standard/'},
             {text: '百度一下', link: 'https://www.baidu.com'},
             {text: 'google', link: 'https://www.google.com'},
         ],
@@ -27,6 +28,10 @@ module.exports = {
                 '',  /* /ceph/README.html */
                 'ceph',  /* /ceph/ceph.html */
             ],
+            '/standard/': [
+                '',  /* /standard/README.html */
+                'design',  /* /standard/design.html */
+            ]
         }
     },
     // sidebar: 'auto'
