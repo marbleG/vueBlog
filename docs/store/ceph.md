@@ -9,10 +9,23 @@ wget -q -O- 'https://mirrors.aliyun.com/ceph/keys/release.asc' | sudo apt-key ad
 sudo apt-add-repository 'deb https://mirrors.aliyun.com/ceph/debian-octopus/ buster main'
 ./cephadm install
 mkdir -p /etc/ceph
+#部署集群
 cephadm bootstrap --mon-ip 192.168.56.101
-
+#新增节点
+ceph cephadm get-pub-key > ~/ceph.pub
+ssh-copy-id -f -i ~/ceph.pub root@marble-p2c
 ceph orch host add marble-p2c 192.168.56.102
+#新增osd
+ceph orch daemon add osd marble-p2c:/dev/sdb
 
+#开启restful
+ceph restful create-self-signed-cert
+
+#新增cephfs
+
+
+#删除集群
+cephadm rm-cluster --fsid=3b0b3cc8-80e0-11ed-bc04-5254008e5538 --force
 ```
 
 ### 1.集群部署

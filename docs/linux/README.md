@@ -60,3 +60,6 @@ iface enp0s8 inet static
 address 192.168.56.101
 netmask 255.255.255.0
 ```
+
+##服务
+![img.png](./img.png)
