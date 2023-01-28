@@ -31,6 +31,10 @@ module.exports = {
             '/standard/': [
                 '',  /* /standard/README.html */
                 'design',  /* /standard/design.html */
+            ],
+            '/network/': [
+                '',  /* /network/README.html */
+                'base',  /* /network/base.html */
             ]
         }
     },
