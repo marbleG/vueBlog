@@ -5,7 +5,7 @@ module.exports = {
             {text: 'Home', link: '/'},
             {text: 'java', link: '/zh/java/'},
             {text: 'redis', link: '/redis/'},
-            {text: 'foo', link: '/foo/'},
+            {text: 'CI/CD', link: '/cicd/'},
             {text: '网络', link: '/network/'},
             {text: '存储', link: '/store/'},
             {text: 'linux', link: '/linux/'},
@@ -14,10 +14,9 @@ module.exports = {
             {text: 'google', link: 'https://www.google.com'},
         ],
         sidebar: {
-            '/foo/': [
-                '',     /* /foo/ */
-                'one',  /* /foo/one.html */
-                'two'   /* /foo/two.html */
+            '/cicd/': [
+                '',     /* /cicd/ */
+                'devops',  /* /cicd/devops.html */
             ],
             '/redis/': [
                 '',  /* /redis/README.html */
