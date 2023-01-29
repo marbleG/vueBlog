@@ -14,6 +14,12 @@ ulimit -u 8192
 ```shell
 docker run --name postgresqldb --restart=always -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=root -d postgres
 ```
+创建数据库帐号
+```shell
+create user sonar with password 'sonar';
+create database sonar owner sonar;
+grant all privileges on database sonar to sonar;
+```
 3. 启动sonar
 ```shell
 docker run -d --name sonarqube \

@@ -20,6 +20,7 @@ ceph orch daemon add osd marble-p2c:/dev/sdb
 
 #开启restful
 ceph restful create-self-signed-cert
+ceph restful create-key admin
 
 #新增cephfs
 
@@ -27,6 +28,11 @@ ceph restful create-self-signed-cert
 #删除集群
 cephadm rm-cluster --fsid=3b0b3cc8-80e0-11ed-bc04-5254008e5538 --force
 ```
+
+#### 通过cephadm移除集群
+1. cddea848-8fe8-11ed-908a-5254008e5538
+2. `cephadm rm-cluster --fsid cddea848-8fe8-11ed-908a-5254008e5538 --force`
+3. 
 
 ### 1.集群部署
 #### osd模块
