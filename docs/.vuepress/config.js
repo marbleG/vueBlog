@@ -38,4 +38,6 @@ module.exports = {
         }
     },
     // sidebar: 'auto'
+    plugins: ['@vuepress/back-to-top']
+
 }

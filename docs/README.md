@@ -1,6 +1,6 @@
 ---
 home: true
-heroImage: /hero.png
+heroImage: /logo.png
 heroText: Marble's blog
 tagline: 博客
 actionText: 起飞 →
