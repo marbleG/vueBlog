@@ -37,7 +37,7 @@ module.exports = {
             ]
         }
     },
-    // sidebar: 'auto'
+    sidebar: 'auto',
     plugins: ['@vuepress/back-to-top']
 
 }

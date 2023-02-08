@@ -2,7 +2,6 @@
 sidebar: auto
 ---
 # JAVA 
-author: marble
 
 ### java 8 > java 11
 

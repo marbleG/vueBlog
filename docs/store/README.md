@@ -65,6 +65,14 @@ mkfs.ext4 /dev/rbd0
    2. pg: 归置组，看不见，对象名hash计算后存到PG上（crush1），PG根据pool的类型和副本数放到对应的osd( crush2)
    3. pgp: 
 4. rdb 块
+5. iSCSI（Internet Small Computer System Interface）是一种在IP网络上运行的存储协议，它将SCSI协议封装在TCP/IP协议中，可以通过网络提供块级存储服务。iSCSI架构通常包括以下组件：
+   1. iSCSI initiator：发起iSCSI请求的主机或设备，它使用iSCSI协议访问iSCSI target上的存储资源。
+   2. iSCSI target：提供存储资源的设备或主机，它使用iSCSI协议响应iSCSI initiator的请求，并将存储资源映射到iSCSI LUN（Logical Unit Number）。
+   3. iSCSI LUN：iSCSI target上的逻辑单元号，它可以是一个物理磁盘、一个分区、一个文件或其他存储资源，由iSCSI target管理并映射给iSCSI initiator。
+   4. iSCSI SAN（Storage Area Network）：使用iSCSI协议连接的存储网络，它可以是一个局域网或广域网，连接多个iSCSI initiator和iSCSI target，并提供共享存储资源。
+   5. iSCSI HBA（Host Bus Adapter）：连接iSCSI initiator和iSCSI SAN的网络适配器或网卡，它可以是专用的iSCSI HBA或使用标准网卡实现。
+   6. iSCSI software initiator：在主机上安装的iSCSI initiator软件，它使用主机的网络适配器或网卡连接到iSCSI SAN，并将iSCSI请求转换为SCSI命令。
+   7. 在iSCSI架构中，iSCSI initiator通过网络连接到iSCSI target，并访问iSCSI LUN上的存储资源，就像直接连接到本地存储设备一样。通过iSCSI技术，可以实现存储资源的共享、备份、迁移等功能，提高存储资源的利用率和可靠性。
 
 rados是对象数据的底层存储服务由多个主机组成的存储集群
 librados 是rados的api 可以使用java
