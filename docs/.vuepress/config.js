@@ -8,6 +8,7 @@ module.exports = {
             {text: 'CI/CD', link: '/cicd/'},
             {text: '网络', link: '/network/'},
             {text: '存储', link: '/store/'},
+            {text: 'k8s', link: '/k8s/'},
             {text: 'linux', link: '/linux/'},
             {text: '规范', link: '/standard/'},
             {text: '百度一下', link: 'https://www.baidu.com'},
