@@ -23,3 +23,5 @@
    4. 命令的行为与函数非常相似，因此其“returnValue”字段充当函数实际返回值的隐喻。如果验证成功，则开始执行阶段，其中填充“成功”和“异常”。
 3. 当用户一次运行多个命令时，后端使用MultipleActionsRunner，execute方法同时异步运行所有命令的验证，然后等待所有验证线程，完成所有验证后，两种：1.全部通过 2.每个命令执行通过验证
 4. internalValidate() 验证命令 和 execute() 执行命令
+5. ![img.png](./img.png)
+6. ![img_1.png](./img_1.png)
