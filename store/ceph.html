@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ceph分布式文件系统</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/vueblog/assets/css/0.styles.9c4f8d34.css" as="style"><link rel="preload" href="/vueblog/assets/js/app.81e52da8.js" as="script"><link rel="preload" href="/vueblog/assets/js/2.365067af.js" as="script"><link rel="preload" href="/vueblog/assets/js/3.98cb2320.js" as="script"><link rel="prefetch" href="/vueblog/assets/js/10.a0e23fea.js"><link rel="prefetch" href="/vueblog/assets/js/11.b758150e.js"><link rel="prefetch" href="/vueblog/assets/js/12.d02c1519.js"><link rel="prefetch" href="/vueblog/assets/js/13.0a3e45d8.js"><link rel="prefetch" href="/vueblog/assets/js/14.fd438b0f.js"><link rel="prefetch" href="/vueblog/assets/js/15.8f2f6504.js"><link rel="prefetch" href="/vueblog/assets/js/16.702f6c0f.js"><link rel="prefetch" href="/vueblog/assets/js/17.875cc70b.js"><link rel="prefetch" href="/vueblog/assets/js/18.73ef9897.js"><link rel="prefetch" href="/vueblog/assets/js/19.fcbd610b.js"><link rel="prefetch" href="/vueblog/assets/js/20.b86ab3ce.js"><link rel="prefetch" href="/vueblog/assets/js/21.17f5d888.js"><link rel="prefetch" href="/vueblog/assets/js/22.08acf871.js"><link rel="prefetch" href="/vueblog/assets/js/23.bbf8853f.js"><link rel="prefetch" href="/vueblog/assets/js/24.02668152.js"><link rel="prefetch" href="/vueblog/assets/js/25.1bc6f63b.js"><link rel="prefetch" href="/vueblog/assets/js/26.7d6104a9.js"><link rel="prefetch" href="/vueblog/assets/js/4.b835cd21.js"><link rel="prefetch" href="/vueblog/assets/js/5.2d560cb6.js"><link rel="prefetch" href="/vueblog/assets/js/6.d57284aa.js"><link rel="prefetch" href="/vueblog/assets/js/7.51fc855c.js"><link rel="prefetch" href="/vueblog/assets/js/8.f96a8507.js"><link rel="prefetch" href="/vueblog/assets/js/9.4aff9137.js">
+    <link rel="stylesheet" href="/vueblog/assets/css/0.styles.9c4f8d34.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/vueblog/" class="home-link router-link-active"></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/vueblog/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/vueblog/zh/java/" class="nav-link">
+  java
+</a></div><div class="nav-item"><a href="/vueblog/redis/" class="nav-link">
+  redis
+</a></div><div class="nav-item"><a href="/vueblog/cicd/" class="nav-link">
+  CI/CD
+</a></div><div class="nav-item"><a href="/vueblog/network/" class="nav-link">
+  网络
+</a></div><div class="nav-item"><a href="/vueblog/store/" class="nav-link router-link-active">
+  存储
+</a></div><div class="nav-item"><a href="/vueblog/k8s/" class="nav-link">
+  k8s
+</a></div><div class="nav-item"><a href="/vueblog/linux/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/vueblog/standard/" class="nav-link">
+  规范
+</a></div><div class="nav-item"><a href="https://www.baidu.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  百度一下
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  google
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/vueblog/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/vueblog/zh/java/" class="nav-link">
+  java
+</a></div><div class="nav-item"><a href="/vueblog/redis/" class="nav-link">
+  redis
+</a></div><div class="nav-item"><a href="/vueblog/cicd/" class="nav-link">
+  CI/CD
+</a></div><div class="nav-item"><a href="/vueblog/network/" class="nav-link">
+  网络
+</a></div><div class="nav-item"><a href="/vueblog/store/" class="nav-link router-link-active">
+  存储
+</a></div><div class="nav-item"><a href="/vueblog/k8s/" class="nav-link">
+  k8s
+</a></div><div class="nav-item"><a href="/vueblog/linux/" class="nav-link">
+  linux
+</a></div><div class="nav-item"><a href="/vueblog/standard/" class="nav-link">
+  规范
+</a></div><div class="nav-item"><a href="https://www.baidu.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  百度一下
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://www.google.com" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  google
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/vueblog/store/" aria-current="page" class="sidebar-link">存储</a></li><li><a href="/vueblog/store/ceph.html" aria-current="page" class="active sidebar-link">ceph分布式文件系统</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/vueblog/store/ceph.html#_1-快速入门" class="sidebar-link">1.快速入门</a></li><li class="sidebar-sub-header"><a href="/vueblog/store/ceph.html#_4-综合实践" class="sidebar-link">4. 综合实践</a></li></ul></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="ceph分布式文件系统"><a href="#ceph分布式文件系统" class="header-anchor">#</a> ceph分布式文件系统</h1> <h2 id="_1-快速入门"><a href="#_1-快速入门" class="header-anchor">#</a> 1.快速入门</h2> <h3 id="_1-集群安装"><a href="#_1-集群安装" class="header-anchor">#</a> 1.集群安装</h3> <h4 id="通过cephadm部署集群"><a href="#通过cephadm部署集群" class="header-anchor">#</a> 通过cephadm部署集群</h4> <div class="language-shell extra-class"><pre class="language-shell"><code>./cephadm add-repo <span class="token parameter variable">--release</span> octopus
+<span class="token function">wget</span> <span class="token parameter variable">-q</span> -O- <span class="token string">'https://mirrors.aliyun.com/ceph/keys/release.asc'</span> <span class="token operator">|</span> <span class="token function">sudo</span> apt-key <span class="token function">add</span> -
+<span class="token function">sudo</span> apt-add-repository <span class="token string">'deb https://mirrors.aliyun.com/ceph/debian-octopus/ buster main'</span>
+./cephadm <span class="token function">install</span>
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/ceph
+<span class="token comment">#部署集群</span>
+cephadm bootstrap --mon-ip <span class="token number">192.168</span>.56.101
+<span class="token comment">#新增节点</span>
+ceph cephadm get-pub-key <span class="token operator">&gt;</span> ~/ceph.pub
+ssh-copy-id <span class="token parameter variable">-f</span> <span class="token parameter variable">-i</span> ~/ceph.pub root@marble-p2c
+ceph orch <span class="token function">host</span> <span class="token function">add</span> marble-p2c <span class="token number">192.168</span>.56.102
+<span class="token comment">#新增osd</span>
+ceph orch daemon <span class="token function">add</span> osd marble-p2c:/dev/sdb
+
+<span class="token comment">#开启restful</span>
+ceph restful create-self-signed-cert
+ceph restful create-key admin
+
+<span class="token comment">#新增cephfs</span>
+
+
+<span class="token comment">#删除集群</span>
+cephadm rm-cluster <span class="token parameter variable">--fsid</span><span class="token operator">=</span>3b0b3cc8-80e0-11ed-bc04-5254008e5538 <span class="token parameter variable">--force</span>
+</code></pre></div><h4 id="通过cephadm移除集群"><a href="#通过cephadm移除集群" class="header-anchor">#</a> 通过cephadm移除集群</h4> <ol><li>cddea848-8fe8-11ed-908a-5254008e5538</li> <li><code>cephadm rm-cluster --fsid cddea848-8fe8-11ed-908a-5254008e5538 --force</code></li> <li></li></ol> <h3 id="_1-集群部署"><a href="#_1-集群部署" class="header-anchor">#</a> 1.集群部署</h3> <h4 id="osd模块"><a href="#osd模块" class="header-anchor">#</a> osd模块</h4> <ol><li>osd部署 本地磁盘挂载至ceph中
+2. 分类
+2. blueStore ceph-osd 进程
+3. FileStore xfs+ leveldb<div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#格式化，非必须</span>
+mkfs.ext4 /dev/sdb
+blkid
+ceph-deplay disk list
+ceph-deplay disk zap <span class="token comment">#擦除</span>
+   
+ceph-deplay osd create <span class="token function">node</span> <span class="token parameter variable">--data</span> /dev/sdb --block-db 
+ceph osd tree
+ceph osd <span class="token function">ls</span>
+ceph osd dump
+ceph osd status
+ceph osd perf <span class="token comment">#统计延迟</span>
+ceph osd <span class="token function">df</span>
+</code></pre></div></li> <li>osd操作<div class="language-shell extra-class"><pre class="language-shell"><code>ceph osd pause <span class="token comment">#暂停接受数据</span>
+ceph osd unpause
+ceph osd crush reweight osd.编号 <span class="token comment">#修改权重值</span>
+ceph osd down osd.编号 <span class="token comment">#关闭也会重新启动，只能停服务</span>
+ceph osd up osd.编号 <span class="token comment">#</span>
+ceph osd out osd.编号 <span class="token comment">#驱逐出及集群</span>
+ceph osd <span class="token keyword">in</span> osd.编号 <span class="token comment">#加回集群</span>
+</code></pre></div></li> <li>osd节点<div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#删除</span>
+<span class="token comment">#1.修改权重 osd crush reweight</span>
+<span class="token comment">#2.停止指定osd进程 systemctl stop</span>
+<span class="token comment">#3.驱逐出 osd out</span>
+<span class="token comment">#4.从crush移除osd节点 osd crush  rm</span>
+<span class="token comment">#5.删除节点 osd rm</span>
+<span class="token comment">#6.删除osd认证节点 auth rm</span>
+
+<span class="token comment">#添加</span>
+<span class="token number">1</span>.没有被占用 
+<span class="token number">2</span>.格式化
+<span class="token number">3</span>.加入集群 ceph-deploy
+</code></pre></div></li></ol> <h4 id="存储实践"><a href="#存储实践" class="header-anchor">#</a> 存储实践</h4> <ol><li>概念
+<ol><li>Pool 逻辑存储区域</li> <li>PG 归置组 pool-&gt;pg-&gt;osd</li> <li>PGP 维持pg和osd的一种策略</li> <li>CRUSH
+5. 一致性hash算法将对象名称映射到PG
+6. 将PG id 基于crush算法映射到OSD</li></ol></li> <li>操作</li></ol> <div class="language-shell extra-class"><pre class="language-shell"><code>ceph osd pool create 存储池名 <span class="token number">16</span> <span class="token number">16</span> <span class="token comment">#16个pg，16个组</span>
+ceph osd pool <span class="token function">ls</span>
+ceph osd pool <span class="token function">ls</span> detail
+ceph osd pool stats
+rados lspools
+rados put 文件对象名<span class="token punctuation">(</span>id<span class="token punctuation">)</span> /path/to/file <span class="token parameter variable">--pool</span> 存储池名 <span class="token comment">#上传文件</span>
+ceph osd map 存储池 文件对象名<span class="token punctuation">(</span>id<span class="token punctuation">)</span>
+rados <span class="token function">rm</span> 文件对象名<span class="token punctuation">(</span>id<span class="token punctuation">)</span> <span class="token parameter variable">--pool</span> 存储池名 <span class="token comment">#上传文件</span>
+
+ceph pg dump
+ceph pg <span class="token function">ls</span>
+ceph pg ls-by-pool
+ceph pg ls-by-osd
+<span class="token comment">#删除</span>
+ceph osd pool <span class="token function">rm</span> 存储池名 存储池名 
+</code></pre></div><p><img src="/vueblog/assets/img/img_2.48b40515.png" alt="img_2.png"> <img src="/vueblog/assets/img/img_1.5ce39609.png" alt="img_1.png"></p> <h2 id="_4-综合实践"><a href="#_4-综合实践" class="header-anchor">#</a> 4. 综合实践</h2> <ol><li>可视化工具
+<ol><li>calamari</li> <li>VSM</li> <li>Inksope</li> <li>dashboard python 开发的监控页面，安装在mgr节点上</li></ol></li> <li>dashboard</li></ol> <div class="language-shell extra-class"><pre class="language-shell"><code>
+</code></pre></div><ol start="3"><li>tls
+对dashboard 提供证书访问</li></ol> <div class="language-shell extra-class"><pre class="language-shell"><code></code></pre></div><ol start="4"><li>rgw
+默认dashboard未开启</li></ol> <div class="language-shell extra-class"><pre class="language-shell"><code>radosgw-admin user create <span class="token parameter variable">--uid</span><span class="token operator">=</span>rgw --display-name<span class="token operator">=</span>rgw <span class="token parameter variable">--lsb_release</span> <span class="token parameter variable">-a</span>
+<span class="token builtin class-name">echo</span> access_key/secret_key <span class="token operator">&gt;</span> <span class="token number">1</span>/2.file
+ceph dashboard set-rgw-api-access-key <span class="token parameter variable">-i</span> <span class="token number">1</span>.file
+ceph dashboard set-rgw-api-secret-key <span class="token parameter variable">-i</span> <span class="token number">1</span>.file
+</code></pre></div><ol><li>监控<br>
+prometheus<br>
+架构</li></ol> <h3 id="crush"><a href="#crush" class="header-anchor">#</a> crush</h3> <h4 id="基础知识"><a href="#基础知识" class="header-anchor">#</a> 基础知识</h4> <ol><li>数据分发算法，多维度的</li> <li>寻址的三次映射
+3. File和object映射：文件数据object的数据块切片操作，便于多数据的并行化处理
+4. object和PG映射：将文件数据切分后的每一个object通过简单的hash算法归到一个PG中
+5. PG和OSD映射：将PG映射到主机实际的OSD数据磁盘上</li> <li>配置和更改和数据动态再平衡等关键特性
+7. osd动态平衡，osd出现异常，避免故障风暴
+<img src="/vueblog/assets/img/img_3.de84e30c.png" alt="img_3.png"></li> <li>crush map 不同层次的逻辑Buckets和Devices组成
+8. buckets：Root多区域，datacenter数据中心，room机房，rack机柜，host是主机
+9. devices: 各种OSD存储设备</li></ol> <p>buckets 示例</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token function">host</span> mon01<span class="token punctuation">{</span>
+  <span class="token function">id</span> <span class="token parameter variable">-3</span>
+  <span class="token function">id</span> <span class="token parameter variable">-4</span> class hdd
+  weight <span class="token number">0.039</span>
+  alg straw2
+  <span class="token builtin class-name">hash</span> <span class="token number">0</span>
+  item osd.0 weight <span class="token number">0.019</span> <span class="token comment">#低一层级的bucket名称</span>
+  item osd.1 weight <span class="token number">0.019</span>
+  
+<span class="token punctuation">}</span>
+
+</code></pre></div><p>相关操作</p> <div class="language-shell extra-class"><pre class="language-shell"><code><span class="token comment">#1.获取crush信息</span>
+ceph osd crush dump
+<span class="token comment">#2.操作相关信息 格式转换-&gt;再次应用</span>
+
+ceph osd getcrushmap <span class="token parameter variable">-o</span> crushmap_file.txt
+crushtool <span class="token parameter variable">-d</span> crushmap_file.txt 
+crushtool <span class="token parameter variable">-c</span> crushmap_file.txt <span class="token parameter variable">-o</span> new.txt
+ceph osd setcrushmap <span class="token parameter variable">-i</span> new_crushmap_file.txt
+ceph osd crush dump<span class="token operator">|</span><span class="token function">grep</span> max_size
+</code></pre></div><p>实践：将不同数据存在不同的磁盘中
+<img src="/vueblog/assets/img/img_4.a79cd096.png" alt="img_4.png">
+修改部分
+<img src="/vueblog/assets/img/img_5.f776ee95.png" alt="img_5.png"> <img src="/vueblog/assets/img/img_6.40ef356b.png" alt="img_6.png">
+定制规则
+<img src="/vueblog/assets/img/img_7.cd17868b.png" alt="img_7.png"> <img src="img_8.png" alt="img_8.png"></p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/vueblog/store/" class="prev router-link-active">
+        存储
+      </a></span> <!----></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/vueblog/assets/js/app.81e52da8.js" defer></script><script src="/vueblog/assets/js/2.365067af.js" defer></script><script src="/vueblog/assets/js/3.98cb2320.js" defer></script>
+  </body>
+</html>
